@@ -1,0 +1,43 @@
+@import 'scaffolding/grids';
+@import 'scaffolding/type';
+@import 'scaffolding/colors';
+
+@import 'components/query-form';
+@import 'components/trend';
+@import 'components/stat';
+
+body {
+	@extend %horizontal-start;
+	@extend %helvetica-bold;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	background-color: $main-yellow;
+	padding: $vertical-spacing 0;
+}
+
+h1, h2, h3, p, label, a {
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+}
+
+.results {
+	@extend %vertical-center;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 90%;
+
+	max-width: 800px;
+}
+
+// .results-header {
+// 	width: 100%;
+// 	border-bottom: 4px $black solid;
+// 	padding: 1rem 0;
+// 	margin-bottom: $vertical-spacing;
+
+// 	&__title {
+// 		width: 100%;
+// 		text-align: center;
+// 	}
+// }

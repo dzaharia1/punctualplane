@@ -1,0 +1,27 @@
+.trends {
+	@extend %horizontal-start;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin-bottom: 3rem;
+	width: 100%;
+}
+
+.result-trend {
+	@extend %vertical-center;
+	width: 100%;
+	max-width: 280px;
+
+	&__graph {
+		@extend %vertical-center;
+		justify-content: center;
+		width: 100%;
+		height: 10rem;
+		border-bottom: 2px $black solid;
+		margin-bottom: 1rem;
+	}
+
+	&__label {
+		@extend %helvetica-light;
+		font-size: .9rem;
+	}
+}

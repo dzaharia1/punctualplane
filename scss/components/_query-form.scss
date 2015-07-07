@@ -1,0 +1,42 @@
+.query-form {
+	@extend %vertical-end;
+	width: 100%;
+	margin-bottom: $vertical-spacing;
+	max-width: 300px;
+
+	&__parameter {
+		// @extend .query-form;
+		@extend %vertical-start;
+		border: $black solid;
+		border-width: 4px 0;
+		width: 65%;
+		max-width: 300px;
+		margin-bottom: 1rem;
+	}
+
+	&__textbox {
+		@extend %helvetica-bold;
+		padding: 1rem 0;
+		// padding-left: 1rem;
+		border: none;
+		outline: none;
+		font-size: 1rem;
+		width: 100%;
+		background-color: $main-yellow;
+		color: $primary-text;
+	}
+
+	&__label {
+		@extend %helvetica-bold;
+		position: relative;
+		top: 16px;
+		height: 0;
+		transition: .1s ease-out;
+		right: -1rem;
+	}
+
+	&__divider {
+		width: 100%;
+		border-bottom: 1px $black solid;
+	}
+}

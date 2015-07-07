@@ -1,0 +1,37 @@
+.stats-list {
+	@extend %horizontal-start;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	width: 100%;
+	list-style: none;
+	margin: 0 0 $vertical-spacing 0;
+	padding: 0;
+}
+
+.result-stat {
+	@extend %vertical-center;
+	width: 45%;
+	margin-bottom: 2rem;
+	max-width: 150px;
+
+	&__figure-container {
+		@extend %horizontal-end;
+		justify-content: center;
+		width: 100%;
+		margin-bottom: 1rem;
+	}
+
+	&__figure {
+		margin-right: 5px;
+	}
+
+	&__unit{
+		@extend %helvetica-light;
+		margin-bottom: .3rem;
+	}
+
+	&__label {
+		@extend %helvetica-light;
+		text-align: center;
+	}
+}
