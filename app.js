@@ -28,7 +28,11 @@ app.get('/', function(req, res) {
 
 app.get('/getAverages', function(req, res) {
 	getAveragesByIndex(req.query, function(err, result) {
-		res.json(result);
+		result[0] = { "numResults": result.length };
+		res.json({
+			"numGroups": result.length,
+			groups: result
+		});
 	});
 });
 
@@ -39,17 +43,13 @@ app.get('/getRecords', function(req, res) {
 });
 
 function cleanupParameters (parameters) {
-	// parse ints from all numerical values
 	for (parameter in parameters) {
 		var parsedValue = parseInt(parameters[parameter]);
 		if (parsedValue) {
 			parameters[parameter] = parsedValue;
 		}
 	}
-
-	// remove the index parameter
 	delete parameters['index'];
-
 	return parameters;
 }
 
@@ -59,10 +59,6 @@ function findRecords(parameters, callback) {
 
 function getAveragesByIndex(parameters, callback) {
 	var index = '$' + parameters['index'];
-
-	if (!index) {
-		callback('error', { "error": "provide an index on which to group results" })
-	}
 
 	var queryObject = flights.aggregate([
 		{
