@@ -28,7 +28,6 @@ app.get('/', function(req, res) {
 
 app.get('/getAverages', function(req, res) {
 	getAveragesByIndex(req.query, function(err, result) {
-		result[0] = { "numResults": result.length };
 		res.json({
 			"numGroups": result.length,
 			groups: result
