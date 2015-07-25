@@ -1,12 +1,13 @@
 var express = require('express');
 var handlebars = require('express-handlebars');
 var path = require('path');
+var mongoose = require('mongoose');
 // var bodyParser = require('body-parser');
 var content = require('./fakedata');
 
-// mongoose.connect('mongodb://localhost:27017/flights')
+mongoose.connect('mongodb://localhost:27017/flights')
 var app = express();
-// var flights = require('./flights');
+var flights = require('./flights');
 
 var localport = '3333';
 var localhost = 'http://localhost';
@@ -22,21 +23,73 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-	viewData = {
-		testString: "Hello World!"
+	res.send('hi! Try passing a query to /getAverages');
+});
+
+app.get('/getAverages', function(req, res) {
+	getAveragesByIndex(req.query, function(err, result) {
+		res.json(result);
+	});
+});
+
+app.get('/getRecords', function(req, res) {
+	findRecords(req.query, function(err, result) {
+		res.json(result);
+	});
+});
+
+function cleanupParameters (parameters) {
+	// parse ints from all numerical values
+	for (parameter in parameters) {
+		var parsedValue = parseInt(parameters[parameter]);
+		if (parsedValue) {
+			parameters[parameter] = parsedValue;
+		}
 	}
-	res.render('index', {trends: content.trends, stats: content.stats});
-});
 
-app.get('/datatest', function(req, res) {
-	// var distinctAirlines = flights.distinct( "Carrier" );
-	// var query = flights.find( { "OriginCityName": "Atlanta, GA", "DestCityName": "New York, NY" } );
-	// db.flights.aggregate( { [ { $match: { "OriginCityName": "Austin, TX", "DesCityName": "New York, NY" } }, { $group: { _id: "Carrier", Average: { $avg: "$DepDelayMinutes" } } } ] } );
+	// remove the index parameter
+	delete parameters['index'];
 
-	// query.exec(function(err, queryResult) {
-	// 	res.json(queryResult);
-	// });
-});
+	return parameters;
+}
+
+function findRecords(parameters, callback) {
+	flights.find(cleanupParameters(parameters)).exec(callback);
+}
+
+function getAveragesByIndex(parameters, callback) {
+	var index = '$' + parameters['index'];
+
+	if (!index) {
+		callback('error', { "error": "provide an index on which to group results" })
+	}
+
+	var queryObject = flights.aggregate([
+		{
+			$match: cleanupParameters(parameters)
+		},
+		{
+			$group: {
+				_id: index,
+				nReturned: { $sum: 1 },
+				avgDelay: { $avg: "$DepDelayMinutes" },
+				avgDistance: { $avg: "$Distance" },
+				avgWeatherDelay: { $avg: "$WeatherDelay" },
+				avgLateAircraftDelay: { $avg: "$LateAircraftDelay" },
+				avgSecurityDelay: { $avg: "$SecurityDelay" },
+				maxDelay: { $max: "$DepDelayMinutes" },
+				minDelay: { $min: "$DepDelayMinutes" }
+			}
+		},
+		{
+			$sort: {
+				_id: 1
+			}
+		}
+	]);
+
+	queryObject.exec(callback);
+}
 
 var server = app.listen(app.get('port'), function() {
 	app.address = app.get('host') + ':' + server.address().port;
