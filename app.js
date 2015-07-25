@@ -2,12 +2,10 @@ var express = require('express');
 var handlebars = require('express-handlebars');
 var path = require('path');
 var mongoose = require('mongoose');
-// var bodyParser = require('body-parser');
-var content = require('./fakedata');
-
 mongoose.connect('mongodb://localhost:27017/flights')
-var app = express();
 var flights = require('./flights');
+
+var app = express();
 
 var localport = '3333';
 var localhost = 'http://localhost';
@@ -16,11 +14,6 @@ var localhost = 'http://localhost';
 
 app.host = app.set('host', process.env.HOST || localhost);
 app.port = app.set('port', process.env.PORT || localport);
-
-app.set('views', path.join(__dirname, 'views'));
-app.engine('hbs', handlebars({extname: 'hbs', defaultLayout: 'layout.hbs'}));
-app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
 	res.send('hi! Try passing a query to /getAverages');
