@@ -4,6 +4,15 @@ This is an api to access a prepopulated MongoDB with data from the FAA flight pe
 
 You can find the dataset through [data.gov](http://catalog.data.gov/dataset/airline-on-time-performance-and-causes-of-flight-delays).
 
+# To run
+
+- `$ git clone git@github.com:dzaharia1/punctualplane-api.git`
+- `$ cd punctualplane-api`
+- `$ npm install`
+- `$ npm run dev`
+
+# API Reference
+
 # `/findflights`
 
 Find flights using any parameter
