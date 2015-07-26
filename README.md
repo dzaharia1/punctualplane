@@ -98,7 +98,7 @@ Find flights using any parameter
 ```
 ##### Sample
 
-All Jeblue flights from Chicago, IL to New York, NY during the month of January, your query would be:
+All Jeblue flights from Chicago, IL to New York, NY during the month of January:
 
 `/findflights?OriginCityName=Chicago, IL&DestCityName=New York, NY&Carrier=B6&Month=1`
 
@@ -190,11 +190,11 @@ A single record in the response array would have the form:
 
 # `/delayaverages`
 
-Calculate average delay information on any query using a given index
+Calculate average delay information on any query, grouped using a given index
 
 #### Request
 
-The request parameter has the same form as that for `/findflights`, but also includes an index parameter.
+The request parameter has the same form for `/findflights`, but also includes an index parameter.
 
 #### Sample request
 
