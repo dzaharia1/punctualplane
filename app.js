@@ -16,10 +16,10 @@ app.host = app.set('host', process.env.HOST || localhost);
 app.port = app.set('port', process.env.PORT || localport);
 
 app.get('/', function(req, res) {
-	res.send('hi! Try passing a query to /getAverages');
+	res.send('hi! Try passing a query using the reference at https://github.com/dzaharia1/punctualplane-api');
 });
 
-app.get('/getAverages', function(req, res) {
+app.get('/delayaverages', function(req, res) {
 	getAveragesByIndex(req.query, function(err, result) {
 		res.json({
 			"numGroups": result.length,
@@ -28,8 +28,8 @@ app.get('/getAverages', function(req, res) {
 	});
 });
 
-app.get('/getRecords', function(req, res) {
-	findRecords(req.query, function(err, result) {
+app.get('/findFlights', function(req, res) {
+	findFlights(req.query, function(err, result) {
 		res.json(result);
 	});
 });
@@ -42,10 +42,11 @@ function cleanupParameters (parameters) {
 		}
 	}
 	delete parameters['index'];
+	console.log(parameters);
 	return parameters;
 }
 
-function findRecords(parameters, callback) {
+function findFlights(parameters, callback) {
 	flights.find(cleanupParameters(parameters)).exec(callback);
 }
 
