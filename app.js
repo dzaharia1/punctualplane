@@ -61,13 +61,14 @@ function getAveragesByIndex(parameters, callback) {
 			$group: {
 				_id: index,
 				nReturned: { $sum: 1 },
-				avgDelay: { $avg: "$DepDelayMinutes" },
-				avgDistance: { $avg: "$Distance" },
+				avgDelay: { $avg: "$DepDelay" },
 				avgWeatherDelay: { $avg: "$WeatherDelay" },
 				avgLateAircraftDelay: { $avg: "$LateAircraftDelay" },
 				avgSecurityDelay: { $avg: "$SecurityDelay" },
-				maxDelay: { $max: "$DepDelayMinutes" },
-				minDelay: { $min: "$DepDelayMinutes" }
+				maxDelay: { $max: "$DepDelay" },
+				minDelay: { $min: "$DepDelay" },
+				avgDistance: { $avg: "$Distance" },
+				avgAirTime: { $avg: "$ActualElapsedTime" }
 			}
 		},
 		{
