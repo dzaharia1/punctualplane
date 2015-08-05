@@ -5,13 +5,13 @@ This is an api to access a prepopulated MongoDB with data from the FAA flight pe
 You can find the dataset through [data.gov](http://catalog.data.gov/dataset/airline-on-time-performance-and-causes-of-flight-delays).
 
 # To run
+Run a mongod using:
+
+`$ mongod`
+
 After downloading the dataset in CSV, run:
 
 `$ mongoimport --type csv --headerline -d flights -c flights filename.csv`
-
-then, run a mongod using:
-
-`$ mongod`
 
 To clone and start the app:
 - `$ git clone git@github.com:dzaharia1/punctualplane-api.git`
